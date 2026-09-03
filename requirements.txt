@@ -1,0 +1,24 @@
+# GIS & Remote sensing
+earthengine-api
+geemap
+rasterio
+rioxarray
+geopandas
+shapely
+pyproj
+osmnx
+pysheds             # flow accumulation cho TWI (thay richdem: richdem cần MSVC build tools trên Windows)
+
+# ML
+scikit-learn
+xgboost
+shap
+imbalanced-learn
+
+# Data & viz
+pandas
+numpy
+python-dotenv        # đọc GEE project id từ .env
+folium
+matplotlib
+seaborn

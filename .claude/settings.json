@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Get-ChildItem -Force\")",
+      "Bash(pip --version)",
+      "Bash(mkdir -p data/raw/osm_cache data/interim/features data/processed notebooks src outputs/figures models && ls -R data notebooks src outputs models 2>/dev/null)",
+      "Bash(python -m venv .venv)",
+      "Bash(./.venv/Scripts/python.exe -m pip install --upgrade pip -q)",
+      "Bash(./.venv/Scripts/python.exe -m pip install -r requirements.txt)",
+      "Bash(./.venv/Scripts/python.exe -m pip install python-dotenv -q)",
+      "Bash(ls -la ~/.config/earthengine/ 2>/dev/null || echo \"CHUA CO CREDENTIALS\")",
+      "Read(//c/Users/USER/.config/**)",
+      "Bash(./.venv/Scripts/earthengine.exe authenticate *)",
+      "Bash(cat \"C:/Users/USER/AppData/Local/Temp/claude/d--LabBK-project/62d4fc6b-3a71-49df-a774-1a98206b1ec7/tasks/b4w5umm23.output\"; echo \"---CREDS---\"; ls -la ~/.config/earthengine/ 2>/dev/null || echo \"chua co credentials\")",
+      "Read(//c/Users/USER/.config/earthengine/**)",
+      "Bash(./.venv/Scripts/python.exe src/gee_utils.py)",
+      "Bash(./.venv/Scripts/python.exe -c ' *)"
+    ],
+    "additionalDirectories": [
+      "D:\\LabBK\\project\\data\\raw"
+    ]
+  }
+}

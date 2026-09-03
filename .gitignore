@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+data/
+models/*.pkl
+outputs/dashboard.html
+.ipynb_checkpoints/
+!data/raw/flood_points.csv
