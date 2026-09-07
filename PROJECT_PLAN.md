@@ -135,7 +135,7 @@ earthengine authenticate
 
 | # | Feature | Nguồn | GEE Asset ID | Cách tính |
 |---|---|---|---|---|
-| F1 | `elevation` | Copernicus DEM GLO-30 | `COPERNICUS/DEM/GLO30_2024_1` (band `DEM`) | Lấy trực tiếp |
+| F1 | `elevation` | FABDEM (Copernicus GLO-30 đã bỏ nhà/cây) | `projects/sat-io/open-datasets/FABDEM` (band `b1`) | Lấy trực tiếp |
 | F2 | `slope` | Từ F1 | — | `ee.Terrain.slope(dem)` |
 | F3 | `twi` | Từ F1 | — | Topographic Wetness Index, xem 4.3 |
 | F4 | `impervious_pct` | ESA WorldCover 2021 | `ESA/WorldCover/v200` | % pixel class 50 (Built-up) trong bán kính 500m |
@@ -148,6 +148,27 @@ earthengine authenticate
 > thay bằng `COPERNICUS/DEM/GLO30_2024_1` (bản xử lý lại năm 2024). Vẫn là Copernicus GLO-30, độ phân
 > giải 30m, cùng bộ band (`DEM`, `EDM`, `FLM`, `HEM`, `WBM`). Đổi để tránh rủi ro Google gỡ asset cũ
 > giữa chừng project. **Nêu lại trong report phần nguồn dữ liệu.**
+>
+> **Ghi chú thay đổi (Ngày 2) — F1 đổi sang FABDEM:** Copernicus GLO-30 là **DSM**, đo bề mặt trên
+> cùng (nóc nhà, ngọn cây) chứ không phải mặt đất. Đo thử tại TP.HCM: Nhà thờ Đức Bà 27,25m,
+> Thảo Điền 9,58m, đồng ruộng Bình Chánh 5,86m — đều cao hơn thực tế. FABDEM là chính bộ dữ liệu đó
+> đã loại bỏ nhà cửa và cây cối, cho lần lượt 16,41m / 4,51m / 1,36m. Vì F2 (slope) và F3 (TWI) đều
+> tính từ F1, dùng DSM sẽ mô phỏng dòng chảy trên mái nhà thay vì trên mặt đường — hỏng 3/8 feature,
+> trong đó TWI là feature quan trọng nhất (mục 4.3). Đây chính là phương án dự phòng đã nêu ở rủi ro R3.
+>
+> Lưu ý khi viết report: FABDEM do cộng đồng host trên GEE (không thuộc kho chính thức của Google),
+> giấy phép CC BY-NC-SA 4.0 — dùng được cho nghiên cứu phi thương mại. Nó là **sản phẩm suy diễn**
+> bằng học máy từ Copernicus, không phải số liệu đo mặt đất trực tiếp. **Nêu rõ trong phần giới hạn.**
+>
+> **Giới hạn đã đo được (Ngày 2) — FABDEM còn sót tán rừng ở Cần Giờ:** thống kê theo xã cho thấy
+> Thạnh An, Bình Khánh, Cần Giờ, An Thới Đông có trung vị 3,0–5,3m (chấp nhận được) nhưng **p95 đạt
+> 10,9–12,0m** — đúng bằng chiều cao tán đước. Thuật toán loại bỏ rừng của FABDEM không xử lý tốt
+> rừng ngập mặn dày trên nền nước. Ảnh hưởng tới project ở mức thấp vì Cần Giờ không có điểm nhãn
+> huấn luyện, nhưng **phải nêu khi diễn giải bản đồ nguy cơ ở Cần Giờ và khi kiểm chứng SAR (D6)**.
+>
+> Đối chiếu kiểm tra (Ngày 2), thống kê độ cao theo phường/xã khớp thực địa: cao nhất là Linh Xuân
+> 21,6m (Thủ Đức), An Nhơn Tây 15,7m và Nhuận Đức 14,3m (Củ Chi), Gò Vấp 11,6m; thấp nhất là
+> Phú Thuận 1,6m, An Phú Đông 1,7m, Tân Nhựt 1,8m, Bình Chánh 2,0m.
 
 **Backup nếu GEE không dùng được:**
 - DEM: Copernicus Browser (dataspace.copernicus.eu) hoặc OpenTopography

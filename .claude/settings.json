@@ -14,7 +14,8 @@
       "Bash(cat \"C:/Users/USER/AppData/Local/Temp/claude/d--LabBK-project/62d4fc6b-3a71-49df-a774-1a98206b1ec7/tasks/b4w5umm23.output\"; echo \"---CREDS---\"; ls -la ~/.config/earthengine/ 2>/dev/null || echo \"chua co credentials\")",
       "Read(//c/Users/USER/.config/earthengine/**)",
       "Bash(./.venv/Scripts/python.exe src/gee_utils.py)",
-      "Bash(./.venv/Scripts/python.exe -c ' *)"
+      "Bash(./.venv/Scripts/python.exe -c ' *)",
+      "Bash(PYTHONIOENCODING=utf-8 ../.venv/Scripts/python.exe features.py)"
     ],
     "additionalDirectories": [
       "D:\\LabBK\\project\\data\\raw"

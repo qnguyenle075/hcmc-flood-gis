@@ -30,7 +30,13 @@ OUTPUTS_DIR = ROOT_DIR / "outputs"
 FIGURES_DIR = OUTPUTS_DIR / "figures"
 MODELS_DIR = ROOT_DIR / "models"
 
-BOUNDARY_PATH = RAW_DIR / "boundary_hcmc.geojson"
+# Ranh giới: vùng địa lý = TP.HCM CŨ (trước sáp nhập 2025), đơn vị hành chính = phường/xã MỚI.
+# GADM (63 tỉnh, bản 2022) chỉ dùng làm lưới lọc để chọn phường thuộc thành phố cũ.
+GADM_RAW_PATH = RAW_DIR / "gadm41_VNM_2.json"
+OSM_CACHE_DIR = RAW_DIR / "osm_cache"                  # osmnx lưu kết quả tải, tránh gọi lại server
+WARDS_PATH = RAW_DIR / "wards_hcmc.geojson"            # 102 phường/xã mới — cần cho Ngày 5
+BOUNDARY_PATH = RAW_DIR / "boundary_hcmc.geojson"      # gộp 102 phường
+BOUNDARY_BUFFER_PATH = INTERIM_DIR / "boundary_hcmc_buffer2km.geojson"
 FLOOD_POINTS_PATH = RAW_DIR / "flood_points.csv"
 FEATURE_STACK_PATH = PROCESSED_DIR / "feature_stack.tif"
 FLOOD_RISK_PROB_PATH = PROCESSED_DIR / "flood_risk_prob.tif"
@@ -41,9 +47,15 @@ DASHBOARD_PATH = OUTPUTS_DIR / "dashboard.html"
 RF_MODEL_PATH = MODELS_DIR / "rf_model.pkl"
 
 # --- GEE asset ids (mục 4.2 PROJECT_PLAN.md) ---
-# Bản GLO30 gốc trong plan đã bị GEE đánh dấu deprecated -> dùng bản xử lý lại 2024.
-# Cùng nguồn Copernicus GLO-30, cùng 30m, cùng band 'DEM'. Xem ghi chú mục 4.2 PROJECT_PLAN.md.
-GEE_DEM = "COPERNICUS/DEM/GLO30_2024_1"
+# F1 dùng FABDEM chứ không phải Copernicus (quyết định Ngày 2, xem ghi chú mục 4.2).
+# Copernicus GLO-30 là DSM: đo nóc nhà và ngọn cây, không phải mặt đất. FABDEM là chính
+# bộ đó đã loại bỏ nhà cửa/cây cối. Vì F2 (slope) và F3 (TWI) đều tính từ F1, dùng DSM
+# sẽ mô phỏng nước chảy trên mái nhà.
+GEE_DEM = "projects/sat-io/open-datasets/FABDEM"
+GEE_DEM_BAND = "b1"
+# Bản DSM gốc, giữ lại để đối chiếu khi cần (hiệu số hai bản ≈ chiều cao nhà cửa/cây)
+GEE_DEM_DSM = "COPERNICUS/DEM/GLO30_2024_1"
+GEE_DEM_DSM_BAND = "DEM"
 GEE_WORLDCOVER = "ESA/WorldCover/v200"
 GEE_GHSL_BUILT = "JRC/GHSL/P2023A/GHS_BUILT_S"
 GEE_CHIRPS = "UCSB-CHG/CHIRPS/DAILY"

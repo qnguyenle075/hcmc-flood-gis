@@ -2,8 +2,15 @@
 __pycache__/
 *.pyc
 .env
-data/
 models/*.pkl
+# osmnx tự tạo thư mục này ở gốc repo khi chưa đặt cache_folder
+cache/
 outputs/dashboard.html
 .ipynb_checkpoints/
+
+# Không commit dữ liệu lớn, TRỪ file nhãn nhập tay (mất là phải gõ lại).
+# Phải mở đường từng cấp thư mục thì dòng phủ định cuối mới có tác dụng.
+data/*
+!data/raw/
+data/raw/*
 !data/raw/flood_points.csv
